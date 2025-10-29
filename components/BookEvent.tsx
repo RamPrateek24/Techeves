@@ -3,11 +3,12 @@
 import { createBooking } from "@/lib/actions/booking.actions";
 import { useState } from "react";
 
-const BookEvent = ({ eventId, slug }: { eventId: string; slug: string }) => {
+const BookEvent = ({ eventId, slug }: { eventId: string; slug: string; }) => {
     const [email, setEmail] = useState('');
     const [submitted, setSubmitted] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
         const { success } = await createBooking({ eventId, slug, email });
 
         if(success){
@@ -16,11 +17,7 @@ const BookEvent = ({ eventId, slug }: { eventId: string; slug: string }) => {
         else{
             console.log("Booking failed");
         }
-        e.preventDefault();
-
-        setTimeout(() => {
-            setSubmitted(true);
-        }, 1000)
+      
     }
   return (
     <div id="book-event">
